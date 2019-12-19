@@ -31,8 +31,8 @@ jobs:
           python-version: "2.7.x"
           architecture: x64
 
-      - name: Environment (common)
-        run: echo ::set-env name=RUSTC_WRAPPER::sccache
+      #- name: Environment (common)
+      #  run: echo ::set-env name=RUSTC_WRAPPER::sccache
 
       - name: Environment (linux)
         if: startsWith(matrix.os, 'ubuntu')
@@ -42,13 +42,13 @@ jobs:
           tar -xzvf sccache-0.2.12-x86_64-unknown-linux-musl.tar.gz
           echo ::add-path::`pwd`/sccache-0.2.12-x86_64-unknown-linux-musl/
 
-      - name: Environment (mac)
-        if: startsWith(matrix.os, 'macOS')
-        run: |
-          cd ..
-          curl -LO https://github.com/mozilla/sccache/releases/download/0.2.12/sccache-0.2.12-x86_64-apple-darwin.tar.gz
-          tar -xzvf sccache-0.2.12-x86_64-apple-darwin.tar.gz
-          echo ::add-path::`pwd`/sccache-0.2.12-x86_64-apple-darwin/
+      #- name: Environment (mac)
+      #  if: startsWith(matrix.os, 'macOS')
+      #  run: |
+      #    cd ..
+      #    curl -LO https://github.com/mozilla/sccache/releases/download/0.2.12/sccache-0.2.12-x86_64-apple-darwin.tar.gz
+      #    tar -xzvf sccache-0.2.12-x86_64-apple-darwin.tar.gz
+      #    echo ::add-path::`pwd`/sccache-0.2.12-x86_64-apple-darwin/
 
       - name: Environment (windows)
         if: startsWith(matrix.os, 'windows')
@@ -58,13 +58,13 @@ jobs:
           tar -zxvf sccache-0.2.12-x86_64-pc-windows-msvc.tar.gz
           echo ::add-path::$(pwd)\sccache-0.2.12-x86_64-pc-windows-msvc\
 
-      - name: Start sccache
-        env:
-          AWS_ACCESS_KEY_ID: AKIA6QEJVNZDGHRMR2KF
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SCCACHE_BUCKET: deno-sccache
-          SCCACHE_IDLE_TIMEOUT: 0
-        run: sccache --start-server
+      #- name: Start sccache
+      #  env:
+      #    AWS_ACCESS_KEY_ID: AKIA6QEJVNZDGHRMR2KF
+      #    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #    SCCACHE_BUCKET: deno-sccache
+      #    SCCACHE_IDLE_TIMEOUT: 0
+      #  run: sccache --start-server
 
       - name: Build
         run: |
@@ -85,7 +85,7 @@ jobs:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: cargo publish -vv
 
-      - name: Stop sccache
-        run: sccache --stop-server
+      #- name: Stop sccache
+      #  run: sccache --stop-server
 
       # TODO cpplint
