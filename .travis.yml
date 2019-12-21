@@ -1,0 +1,31 @@
+language: c++
+os: linux
+dist: bionic
+git:
+  depth: 1
+
+env:
+  global:
+  - RUST_VERSION=1.40.0
+  - CARGO_HOME=$TRAVIS_BUILD_DIR/third_party/rust_crates/
+  - PATH=$CARGO_HOME/bin:$PATH
+
+install:
+- |-
+  # Install Rust.
+  if [ ! $(rustc --version | grep $RUST_VERSION) ]; then
+    curl -sSf https://sh.rustup.rs | sh -s -- -y \
+      --default-toolchain $RUST_VERSION
+    rustup default $RUST_VERSION
+  fi
+  rustup component add clippy
+  rustup component add rustfmt
+  rustc --version
+  cargo --version
+  python --version
+
+script:
+- which clang
+- clang --version
+- cargo build -vv --release --locked --all-targets
+- cargo test -vv --release --locked --all-targets

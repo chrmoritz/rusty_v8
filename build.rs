@@ -8,8 +8,8 @@ use std::process::exit;
 use std::process::Command;
 use which::which;
 
-const MIN_APPLE_CLANG_VER: f32 = 11.0;
-const MIN_LLVM_CLANG_VER: f32 = 9.0;
+const MIN_APPLE_CLANG_VER: f32 = 4.0;
+const MIN_LLVM_CLANG_VER: f32 = 4.0;
 
 fn main() {
   env::set_var("DEPOT_TOOLS_WIN_TOOLCHAIN", "0");
