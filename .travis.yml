@@ -1,8 +1,15 @@
 language: c++
 os: linux
-dist: bionic
+dist: xenial
 git:
   depth: 1
+
+addons:
+  apt:
+    sources:
+    - llvm-toolchain-xenial-8
+    packages:
+    - clang-8
 
 env:
   global:
@@ -27,5 +34,9 @@ install:
 script:
 - which clang
 - clang --version
+- which clang-8
+- clang-8 --version
+- which clang-7
+- clang-7 --version
 - cargo build -vv --release --locked --all-targets
 - cargo test -vv --release --locked --all-targets
