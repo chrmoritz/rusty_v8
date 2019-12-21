@@ -39,15 +39,17 @@ Depends on Python 2.7, not Python 3. [Do not open issues with us regarding
 Python 3; it's something that must be fixed in
 Chromium.](https://bugs.chromium.org/p/chromium/issues/detail?id=942720).
 
-There are several binary tools that are automatically downloaded during the
-build: clang, gn, and ninja. V8 relies on bleeding edge features of clang that
-are not generally available, so we download the clang binary that chromium uses.
-gn and ninja are also not generally available so we download them. It should be
-possible to opt out of the gn and ninja download by specifying the `$GN` and
-`$NINJA` environmental variables. The clang download cannot currently be
-skipped, but we welcome any patches to make that possible.
+The build depends on several binary tools: `gn`, `ninja` and a recent version
+of `clang` (V8 relies on bleeding edge features). Because these are not
+generally available they are automatically download during the build by default.
+It should be possible to opt out of the gn and ninja download by specifying the
+`$GN` and `$NINJA` environmental variables. The clang download can be skipped by
+providing a `$CLANG_BASE_PATH` environmental variable pointing to a recent
+`llvm`/`clang` installation (currently LLVM v9.0+ or Apple clang v11.0+).
+You could also pass in additional arguments to `gn` by setting the `$GN_ARGS`
+environmental variable.
 
-Env vars used in build.rs: `SCCACHE`, `GN`, `NINJA`
+Env vars used in build.rs: `SCCACHE`, `GN`, `NINJA`, `CLANG_BASE_PATH`, `GN_ARGS`
 
 ## FAQ
 
