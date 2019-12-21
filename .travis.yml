@@ -4,13 +4,6 @@ dist: xenial
 git:
   depth: 1
 
-addons:
-  apt:
-    sources:
-    - llvm-toolchain-xenial-8
-    packages:
-    - clang-8
-
 env:
   global:
   - RUST_VERSION=1.40.0
@@ -32,11 +25,11 @@ install:
   python --version
 
 script:
-- which clang
-- clang --version
-- which clang-8
-- clang-8 --version
-- which clang-7
-- clang-7 --version
-- cargo build -vv --release --locked --all-targets
+- curl -fL https://github.com/llvm/llvm-project/releases/download/llvmorg-8.0.1/clang+llvm-8.0.1-x86_64-linux-sles11.3.tar.xz --output /tmp/clang.tar.xz
+- tar xf /tmp/clang.tar.xz -C /tmp
+- mv /tmp/clang+llvm-8.0.1-x86_64-linux-sles11.3 /tmp/clang-llvm
+- ls -la /tmp/clang-llvm
+- ls -la /tmp/clang-llvm/bin
+- /tmp/clang-llvm/bin/clang --version
+- CLANG_BASE_PATH=/tmp/clang-llvm/ cargo build -vv --release --locked --all-targets
 - cargo test -vv --release --locked --all-targets
